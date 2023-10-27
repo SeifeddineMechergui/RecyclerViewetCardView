@@ -1,29 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    tools:context=".DetailActivity">
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <ImageView
-        android:id="@+id/detailImageView"
+        android:id="@+id/detailImage"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"/>
+        android:layout_height="wrap_content"
+        android:src="@drawable/flag" />
 
     <TextView
-        android:id="@+id/detailNomTextView"
-        android:layout_width="wrap_content"
+        android:id="@+id/detailName"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/detailImageView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:text="Gouvernorat Name"
+        android:textSize="18sp"
+        android:padding="8dp"
+        android:gravity="center" />
 
-</RelativeLayout>
+</LinearLayout>
+

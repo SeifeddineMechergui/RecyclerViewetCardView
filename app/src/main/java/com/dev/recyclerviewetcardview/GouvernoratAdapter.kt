@@ -7,37 +7,41 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-import android.content.Context
-import android.content.Intent
 
+class GouvernoratAdapter(private val gouvernorats: List<Gouvernorat>) : RecyclerView.Adapter<GouvernoratAdapter.ViewHolder>() {
 
-class GouvernoratAdapter(private val context: Context, private val gouvernorats: List<Gouvernorat>) :
-    RecyclerView.Adapter<GouvernoratAdapter.GouvernoratViewHolder>() {
+    private var onItemClickListener: ((Gouvernorat) -> Unit)? = null
 
-    inner class GouvernoratViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imageView: ImageView = itemView.findViewById(R.id.imageView)
-        val nomTextView: TextView = itemView.findViewById(R.id.nomTextView)
+    fun setOnItemClickListener(listener: (Gouvernorat) -> Unit) {
+        onItemClickListener = listener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GouvernoratViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.gouvernorat_item, parent, false)
-        return GouvernoratViewHolder(view)
-    }
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val nameTextView: TextView = itemView.findViewById(R.id.gouvernoratName)
+        val imageView: ImageView = itemView.findViewById(R.id.gouvernoratImage)
 
-    override fun onBindViewHolder(holder: GouvernoratViewHolder, position: Int) {
-        val gouvernorat = gouvernorats[position]
-        holder.imageView.setImageResource(gouvernorat.imageResourceId)
-        holder.nomTextView.text = gouvernorat.nom
-
-        holder.itemView.setOnClickListener {
-            val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra("gouvernorat", gouvernorat)
-            context.startActivity(intent)
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemClickListener?.invoke(gouvernorats[position])
+                }
+            }
         }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.gouvernorat_item, parent, false)
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val gouvernorat = gouvernorats[position]
+        holder.nameTextView.text = gouvernorat.name
+        holder.imageView.setImageResource(gouvernorat.imageResourceId)
     }
 
     override fun getItemCount(): Int {
         return gouvernorats.size
     }
 }
-
